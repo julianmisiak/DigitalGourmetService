@@ -1,4 +1,4 @@
-package com.jas.digitalGourmet;
+package com.jas.digitalgourmet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
