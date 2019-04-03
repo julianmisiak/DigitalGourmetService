@@ -1,4 +1,4 @@
-package com.jas.digitalgourmet.controller;
+package com.jas.digitalgourmet.controller.ping;
 
 import java.util.Date;
 
