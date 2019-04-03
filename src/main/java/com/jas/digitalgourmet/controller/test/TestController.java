@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jas.digitalgourmet.controller.valueobject.TestVO;
+import com.jas.digitalgourmet.controller.dto.TestDTO;
 import com.jas.digitalgourmet.model.Test;
 import com.jas.digitalgourmet.service.TestService;
 
@@ -28,7 +28,7 @@ public class TestController {
 	@ApiOperation(value = "Test", notes = "Servicio de Test")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Test creado correctamente"),
 			@ApiResponse(code = 400, message = "Solicitud Inválida") })
-	public ResponseEntity<Test> createCliente(@RequestBody TestVO testVO) {
+	public ResponseEntity<TestDTO> createCliente(@RequestBody TestDTO testVO) {
 		Test test = new Test();
 		return new ResponseEntity<>(this.service.create(test), HttpStatus.CREATED);
 	}
