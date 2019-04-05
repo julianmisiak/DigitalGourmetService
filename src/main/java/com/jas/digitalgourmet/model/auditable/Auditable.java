@@ -26,7 +26,7 @@ public class Auditable<U> {
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATE_TIMESTAMP", nullable = false)
-	public Calendar  getCreateTimestamp() {
+	public Calendar getCreateTimestamp() {
 		return createTimestamp;
 	}
 
@@ -46,6 +46,7 @@ public class Auditable<U> {
 	}
 
 	@CreatedBy
+	@Column(name = "CREATION_USER", nullable = false)
 	public U getCreationUser() {
 		return creationUser;
 	}
@@ -55,6 +56,7 @@ public class Auditable<U> {
 	}
 
 	@LastModifiedBy
+	@Column(name = "MODIFICATION_USER", nullable = false)
 	public U getModificationUser() {
 		return modificationUser;
 	}

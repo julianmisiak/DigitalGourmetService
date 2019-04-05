@@ -2,8 +2,10 @@ package com.jas.digitalgourmet.service.translateobject;
 
 import com.jas.digitalgourmet.controller.dto.DataTransferObject;
 import com.jas.digitalgourmet.controller.dto.TestDTO;
+import com.jas.digitalgourmet.controller.dto.UserDTO;
 import com.jas.digitalgourmet.model.PersistentObject;
 import com.jas.digitalgourmet.model.Test;
+import com.jas.digitalgourmet.model.User;
 
 public class TranslateObject{
 	public static TranslateObject instance = null;
@@ -31,6 +33,11 @@ public class TranslateObject{
 		dto.setModificationUser(po.getModificationUser());
 	}
 	
+	
+	
+	/*
+	 * Test
+	 */
 	private void fillPersistentObject(Test po, TestDTO dto) {
 		fillPersistentObject((PersistentObject)po, (DataTransferObject)dto);
 	}
@@ -47,6 +54,30 @@ public class TranslateObject{
 	
 	public TestDTO translateToDTO(Test po) {
 		TestDTO dto = new TestDTO();
+		fillDataTransferObject(po, dto);
+		return dto;
+	}
+	
+	
+	/*
+	 * * * * User * * * *
+	 */
+	private void fillPersistentObject(User po, UserDTO dto) {
+		fillPersistentObject((PersistentObject)po, (DataTransferObject)dto);
+	}
+	
+	private void fillDataTransferObject(User po, UserDTO dto) {
+		fillDataTransferObject((PersistentObject)po, (DataTransferObject)dto);
+	}
+
+	public User translateToPersistentObject(UserDTO dto) {
+		User po = new User();
+		fillPersistentObject(po, dto);
+		return po;
+	}
+	
+	public UserDTO translateToDTO(User po) {
+		UserDTO dto = new  UserDTO();
 		fillDataTransferObject(po, dto);
 		return dto;
 	}
