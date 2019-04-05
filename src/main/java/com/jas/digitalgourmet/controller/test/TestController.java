@@ -2,6 +2,7 @@ package com.jas.digitalgourmet.controller.test;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class TestController {
 	}
 
 	@PostMapping
+	@CrossOrigin(origins = "*")
 	@ApiOperation(value = "Test", notes = "Servicio de Test")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Test creado correctamente"),
 			@ApiResponse(code = 400, message = "Solicitud Inválida") })
