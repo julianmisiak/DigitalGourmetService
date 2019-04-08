@@ -34,14 +34,14 @@ public class LoginService {
 	public TokenWrapper authenticate(JwtCredentials jwtCredentials) {
 		String token = null;
 		User user = dao.findByUserName(jwtCredentials.getUserName());
-		String securePassword = null;
 
 		if (user != null) {
-			securePassword = generatSecurePassword(user);
+			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword(), PasswordUtils.getSalt(30));
+			if(!isValidPassword) {
+				throw new BusinessException("Credenciales invalidas");
+			}
 		}
-		if (securePassword == null || !user.getPassword().equals(securePassword)) {
-			throw new BusinessException("Credenciales invalidas");
-		}
+		
 		try {
 			token = jwtTokenUtil.generateJWT(jwtCredentials);
 		} catch (UnsupportedEncodingException e) {
@@ -49,12 +49,6 @@ public class LoginService {
 		}
 
 		return new TokenWrapper(token);
-	}
-
-	private String generatSecurePassword(User user) {
-		String securePassword = PasswordUtils.generateSecurePassword(user.getPassword(), PasswordUtils.getSalt(30));
-		return securePassword;
-
 	}
 
 }
