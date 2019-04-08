@@ -23,50 +23,47 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenUtil jwtTokenUtil;
-    private final DigitalGourmetAuthenticationProvider digitalGourmetAuthenticationProvider;
-    
-    @Autowired
-    public WebSecurityConfig(DigitalGourmetAuthenticationProvider digitalGourmetAuthenticationProvider, JwtTokenUtil jwtTokenUtil) {
-        this.digitalGourmetAuthenticationProvider = digitalGourmetAuthenticationProvider;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
+	private final JwtTokenUtil jwtTokenUtil;
+	private final DigitalGourmetAuthenticationProvider digitalGourmetAuthenticationProvider;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(this.digitalGourmetAuthenticationProvider);
-    }
+	@Autowired
+	public WebSecurityConfig(DigitalGourmetAuthenticationProvider digitalGourmetAuthenticationProvider,
+			JwtTokenUtil jwtTokenUtil) {
+		this.digitalGourmetAuthenticationProvider = digitalGourmetAuthenticationProvider;
+		this.jwtTokenUtil = jwtTokenUtil;
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        /*
-         * 1. Se desactiva el uso de cookies
-         * 2. Se activa la configuración CORS con los valores por defecto
-         * 3. Se desactiva el filtro CSRF
-         * 4. Se indica que el login no requiere autenticación
-         * 5. Se indica que el resto de URLs esten securizadas
-         */
-        http
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .cors().and()
-            .csrf().disable()
-            .authorizeRequests().antMatchers(HttpMethod.POST,"/login").permitAll()
-            .anyRequest().authenticated().and()
-                .addFilterAfter(new JWTAuthorizationFilter(this.jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) {
+		auth.authenticationProvider(this.digitalGourmetAuthenticationProvider);
+	}
 
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		/*
+		 * 1. Se desactiva el uso de cookies 2. Se activa la configuración CORS con los
+		 * valores por defecto 3. Se desactiva el filtro CSRF 4. Se indica que el login
+		 * no requiere autenticación 5. Se indica que el resto de URLs esten securizadas
+		 */
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and().csrf()
+				.disable().authorizeRequests().antMatchers(HttpMethod.POST, "/login").permitAll();
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT"));
+		// .anyRequest().authenticated().and()
+		// .addFilterAfter(new JWTAuthorizationFilter(this.jwtTokenUtil),
+		// UsernamePasswordAuthenticationFilter.class);
+	}
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedHeader("*");
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
 
-        return source;
-    }
-    
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+
+		return source;
+	}
+
 }

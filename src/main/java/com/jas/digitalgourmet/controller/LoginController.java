@@ -20,7 +20,6 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-
 	private LoginService service;
 
 	public LoginController(LoginService service) {
@@ -29,17 +28,16 @@ public class LoginController {
 
 	@PostMapping
 	@ApiOperation(value = "Login", notes = "Servicio de Login")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Acceso al sistema exitoso"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Acceso al sistema exitoso"),
 			@ApiResponse(code = 400, message = "Solicitud Inválida") })
 	public ResponseEntity<?> login(@RequestBody JwtCredentials jwtCredentials) {
-
 		try {
 			TokenWrapper tocken = service.authenticate(jwtCredentials);
 			return ResponseEntity.ok().body(tocken);
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorMessageDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
 		}

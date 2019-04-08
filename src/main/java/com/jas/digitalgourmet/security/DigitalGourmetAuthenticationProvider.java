@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DigitalGourmetAuthenticationProvider implements AuthenticationProvider {
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return authentication;
-    }
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		return authentication;
+	}
 
-    @Override
-    public boolean supports(Class<?> auth) {
-        return auth.equals(DigitalGourmetAuthenticationToken.class);
-    }
+	@Override
+	public boolean supports(Class<?> auth) {
+		return auth.equals(DigitalGourmetAuthenticationToken.class);
+	}
 }

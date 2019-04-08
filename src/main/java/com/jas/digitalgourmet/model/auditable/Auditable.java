@@ -17,11 +17,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable<U> {
-	protected Calendar  createTimestamp;
-	protected Calendar  modificationTimestamp;
+	protected Calendar createTimestamp;
+	protected Calendar modificationTimestamp;
 	protected U creationUser;
 	protected U modificationUser;
-	
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -30,18 +29,18 @@ public class Auditable<U> {
 		return createTimestamp;
 	}
 
-	public void setCreateTimestamp(Calendar  createDate) {
+	public void setCreateTimestamp(Calendar createDate) {
 		this.createTimestamp = createDate;
 	}
 
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFICATION_TIMESTAMP", nullable = false)
-	public Calendar  getModificationTimestamp() {
+	public Calendar getModificationTimestamp() {
 		return modificationTimestamp;
 	}
 
-	public void setModificationTimestamp(Calendar  modificationDate) {
+	public void setModificationTimestamp(Calendar modificationDate) {
 		this.modificationTimestamp = modificationDate;
 	}
 
@@ -64,6 +63,5 @@ public class Auditable<U> {
 	public void setModificationUser(U modificationUser) {
 		this.modificationUser = modificationUser;
 	}
-	
 
 }

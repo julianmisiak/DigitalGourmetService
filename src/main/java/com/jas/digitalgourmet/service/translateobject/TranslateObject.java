@@ -1,17 +1,15 @@
 package com.jas.digitalgourmet.service.translateobject;
 
 import com.jas.digitalgourmet.controller.dto.DataTransferObject;
-import com.jas.digitalgourmet.controller.dto.TestDTO;
 import com.jas.digitalgourmet.controller.dto.UserDTO;
 import com.jas.digitalgourmet.model.PersistentObject;
-import com.jas.digitalgourmet.model.Test;
 import com.jas.digitalgourmet.model.User;
 
-public class TranslateObject{
+public class TranslateObject {
 	public static TranslateObject instance = null;
 
 	public static TranslateObject getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new TranslateObject();
 		}
 		return instance;
@@ -24,7 +22,7 @@ public class TranslateObject{
 		po.setCreationUser(dto.getCreationUser());
 		po.setModificationUser(dto.getModificationUser());
 	}
-	
+
 	private void fillDataTransferObject(PersistentObject po, DataTransferObject dto) {
 		dto.setOID(po.getOID());
 		dto.setCreateTimestamp(po.getCreateTimestamp());
@@ -32,42 +30,20 @@ public class TranslateObject{
 		dto.setCreationUser(po.getCreationUser());
 		dto.setModificationUser(po.getModificationUser());
 	}
-	
-	
-	
-	/*
-	 * Test
-	 */
-	private void fillPersistentObject(Test po, TestDTO dto) {
-		fillPersistentObject((PersistentObject)po, (DataTransferObject)dto);
-	}
-	
-	private void fillDataTransferObject(Test po, TestDTO dto) {
-		fillDataTransferObject((PersistentObject)po, (DataTransferObject)dto);
-	}
 
-	public Test translateToPersistentObject(TestDTO dto) {
-		Test po = new Test();
-		fillPersistentObject(po, dto);
-		return po;
-	}
-	
-	public TestDTO translateToDTO(Test po) {
-		TestDTO dto = new TestDTO();
-		fillDataTransferObject(po, dto);
-		return dto;
-	}
-	
-	
 	/*
-	 * * * * User * * * *
+	 * * * * User * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 */
 	private void fillPersistentObject(User po, UserDTO dto) {
-		fillPersistentObject((PersistentObject)po, (DataTransferObject)dto);
+		fillPersistentObject((PersistentObject) po, (DataTransferObject) dto);
+		po.setUserName(dto.getUserName());
+		po.setPassword(dto.getPassword());
 	}
-	
+
 	private void fillDataTransferObject(User po, UserDTO dto) {
-		fillDataTransferObject((PersistentObject)po, (DataTransferObject)dto);
+		fillDataTransferObject((PersistentObject) po, (DataTransferObject) dto);
+		dto.setUserName(po.getCreationUser());
+		dto.setPassword(po.getPassword());
 	}
 
 	public User translateToPersistentObject(UserDTO dto) {
@@ -75,12 +51,11 @@ public class TranslateObject{
 		fillPersistentObject(po, dto);
 		return po;
 	}
-	
+
 	public UserDTO translateToDTO(User po) {
-		UserDTO dto = new  UserDTO();
+		UserDTO dto = new UserDTO();
 		fillDataTransferObject(po, dto);
 		return dto;
 	}
-	
 
 }

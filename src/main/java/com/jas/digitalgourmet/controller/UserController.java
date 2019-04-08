@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jas.digitalgourmet.controller.dto.ErrorMessageDTO;
 import com.jas.digitalgourmet.controller.dto.JwtCredentials;
+import com.jas.digitalgourmet.controller.dto.UserDTO;
 import com.jas.digitalgourmet.model.User;
 import com.jas.digitalgourmet.service.LoginService;
 import com.jas.digitalgourmet.service.UserService;
@@ -25,16 +27,16 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/user")
 public class UserController {
 	private UserService service;
-	
-	
+
 	public UserController(UserService service) {
 		this.service = service;
 	}
+
 	@GetMapping
-	@ApiOperation(value = "Get User", notes = "Lista los todos los usuarios")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Acceso al sistema exitoso"),
-			@ApiResponse(code = 400, message = "Solicitud Inválida") })
-	public ResponseEntity<?> user(@RequestBody(required = false) JwtCredentials jwtCredentials) {
+	@ApiOperation(value = "Get All User", notes = "List of all users")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful request"),
+			@ApiResponse(code = 400, message = "Invalid Request") })
+	public ResponseEntity<?> getAllUser(@RequestBody(required = false) JwtCredentials jwtCredentials) {
 
 		try {
 			List<User> userList = service.findAllUser();
@@ -42,10 +44,46 @@ public class UserController {
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new ErrorMessageDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
 		}
 	}
-	
+
+	@PostMapping
+	@ApiOperation(value = "Create User", notes = "Create user and encrypted password")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful request"),
+			@ApiResponse(code = 400, message = "Invalid Request") })
+	public ResponseEntity<?> saveOrUpdateUser(@RequestBody(required = false) UserDTO user) {
+
+		try {
+			service.saveOrUpdateUser(user);
+			return ResponseEntity.ok().body(Boolean.TRUE);
+		} catch (BusinessException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ErrorMessageDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+		}
+	}
+
+	@DeleteMapping
+	@ApiOperation(value = "Logical Delete", notes = "Delete User By ID")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Delete Saccesfully"),
+			@ApiResponse(code = 400, message = "Invalid Request") })
+	public ResponseEntity<?> deleteUserById(@RequestBody(required = false) Long userOID) {
+
+		try {
+			service.inactiveObjectById(userOID);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(userOID);
+		} catch (BusinessException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ErrorMessageDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+		}
+	}
+
 }

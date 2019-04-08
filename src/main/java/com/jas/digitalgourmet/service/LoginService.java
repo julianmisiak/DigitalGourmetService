@@ -13,12 +13,13 @@ import com.jas.digitalgourmet.dao.UserDAO;
 import com.jas.digitalgourmet.model.User;
 import com.jas.digitalgourmet.security.JwtTokenUtil;
 import com.jas.digitalgourmet.util.BusinessException;
+import com.jas.digitalgourmet.util.PasswordUtils;
 
 @Service
 public class LoginService {
 	private final JwtTokenUtil jwtTokenUtil;
 	private final UserDAO dao;
-	
+
 	@Autowired
 	public LoginService(JwtTokenUtil jwtTokenUtil, UserDAO dao) {
 		this.jwtTokenUtil = jwtTokenUtil;
@@ -32,14 +33,13 @@ public class LoginService {
 
 	public TokenWrapper authenticate(JwtCredentials jwtCredentials) {
 		String token = null;
-		User user = dao.findByUserName(jwtCredentials.getUsername());
-		if(user == null) {
-			user = new User();
-			user.setUserName("Administrador");
-			user.setPassword("1234");
-			dao.save(user);
+		User user = dao.findByUserName(jwtCredentials.getUserName());
+		String securePassword = null;
+
+		if (user != null) {
+			securePassword = generatSecurePassword(user);
 		}
-		if (user == null || !user.getPassword().equals(jwtCredentials.getPassword())) {
+		if (securePassword == null || !user.getPassword().equals(securePassword)) {
 			throw new BusinessException("Credenciales invalidas");
 		}
 		try {
@@ -50,4 +50,11 @@ public class LoginService {
 
 		return new TokenWrapper(token);
 	}
+
+	private String generatSecurePassword(User user) {
+		String securePassword = PasswordUtils.generateSecurePassword(user.getPassword(), PasswordUtils.getSalt(30));
+		return securePassword;
+
+	}
+
 }
