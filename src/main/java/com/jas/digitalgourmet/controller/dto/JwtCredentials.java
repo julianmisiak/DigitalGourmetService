@@ -3,9 +3,11 @@ package com.jas.digitalgourmet.controller.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class JwtCredentials implements Serializable {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private String username;
+public class JwtCredentials implements Serializable {
+	private static final long serialVersionUID = -9006590092525363686L;
+	private String username;
     private String password;
 
     public JwtCredentials() {
@@ -16,6 +18,7 @@ public class JwtCredentials implements Serializable {
         this.password = password;
     }
 
+    @JsonProperty("username")
     public String getUsername() {
         return username;
     }
@@ -24,6 +27,7 @@ public class JwtCredentials implements Serializable {
         this.username = username;
     }
 
+    @JsonProperty("password")
     public String getPassword() {
         return password;
     }
@@ -31,6 +35,7 @@ public class JwtCredentials implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Override
     public String toString() {

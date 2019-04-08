@@ -21,7 +21,7 @@ public class JwtTokenUtil {
         return JWT.create()
                 .withHeader(this.headerClaims())
                 .withIssuer(ISSUER_INFO)
-                .withClaim("usuario", jwtCredentials.getUsername())
+                .withClaim("username", jwtCredentials.getUsername())
                 .withClaim("password", jwtCredentials.getPassword())
                 .sign(Algorithm.HMAC512(SUPER_SECRET_KEY));
     }
@@ -38,6 +38,6 @@ public class JwtTokenUtil {
                                                     .withIssuer(ISSUER_INFO)
                                                     .build();
         DecodedJWT jwt = verifier.verify(header);
-        return new JwtCredentials(jwt.getClaim("usuario").asString(), jwt.getClaim("password").asString());
+        return new JwtCredentials(jwt.getClaim("username").asString(), jwt.getClaim("password").asString());
     }
 }

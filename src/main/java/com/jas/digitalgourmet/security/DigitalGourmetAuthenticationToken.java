@@ -5,8 +5,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import com.jas.digitalgourmet.controller.dto.JwtCredentials;
 
 public class DigitalGourmetAuthenticationToken  extends UsernamePasswordAuthenticationToken {
-
-    private JwtCredentials credentials;
+	private static final long serialVersionUID = -3230226253450874315L;
+	private JwtCredentials credentials;
     private String token;
 
     public DigitalGourmetAuthenticationToken(JwtCredentials credentials) {

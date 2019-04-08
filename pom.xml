@@ -72,7 +72,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- JWT -->
 		<dependency>
 			<groupId>com.auth0</groupId>

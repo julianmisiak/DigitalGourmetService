@@ -2,14 +2,17 @@ package com.jas.digitalgourmet.controller.dto;
 
 import java.io.Serializable;
 
-public class TokenWrapper implements Serializable {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    private String token;
+public class TokenWrapper implements Serializable {
+	private static final long serialVersionUID = -619295101061917399L;
+	private String token;
 
     public TokenWrapper(String token) {
         this.token = token;
     }
 
+    @JsonProperty("token")
     public String getToken() {
         return token;
     }

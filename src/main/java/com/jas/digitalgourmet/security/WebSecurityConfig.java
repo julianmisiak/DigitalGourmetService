@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,9 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .cors().and()
             .csrf().disable()
-            .authorizeRequests().antMatchers("/login", "/swagger*/**").permitAll()
+            .authorizeRequests().antMatchers(HttpMethod.POST,"/login").permitAll()
             .anyRequest().authenticated().and()
-                .addFilterBefore(new JWTAuthorizationFilter(this.jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(new JWTAuthorizationFilter(this.jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -68,12 +69,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
     
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", 
-                "/swagger-resources/**", "/configuration/**", "/swagger-ui.html"
-                , "/webjars/**", "/csrf", "/");
-    }
-    
-
 }
