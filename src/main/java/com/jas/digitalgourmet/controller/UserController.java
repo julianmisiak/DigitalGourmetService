@@ -34,7 +34,7 @@ public class UserController {
 
 	@GetMapping
 	@ApiOperation(value = "Get All User", notes = "List of all users")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful request"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful request"),
 			@ApiResponse(code = 400, message = "Invalid Request") })
 	public ResponseEntity<?> getAllUser(@RequestBody(required = false) JwtCredentials jwtCredentials) {
 

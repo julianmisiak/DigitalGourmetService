@@ -2,6 +2,7 @@ package com.jas.digitalgourmet.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,8 @@ public class LoginController {
 	}
 
 	@PostMapping
-	@ApiOperation(value = "Login", notes = "Servicio de Login")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Acceso al sistema exitoso"),
+	@ApiOperation(value = "Login", notes = "Service of Login")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful request"),
 			@ApiResponse(code = 400, message = "Solicitud Inválida") })
 	public ResponseEntity<?> login(@RequestBody JwtCredentials jwtCredentials) {
 		try {

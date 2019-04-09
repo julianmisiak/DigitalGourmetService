@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,12 +38,13 @@ public class LoginService {
 		User user = dao.findByUserName(jwtCredentials.getUserName());
 
 		if (user != null) {
-			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword(), PasswordUtils.getSalt(30));
-			if(!isValidPassword) {
+			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword(),
+					PasswordUtils.getSalt(30));
+			if (!isValidPassword) {
 				throw new BusinessException("Credenciales invalidas");
 			}
 		}
-		
+
 		try {
 			token = jwtTokenUtil.generateJWT(jwtCredentials);
 		} catch (UnsupportedEncodingException e) {

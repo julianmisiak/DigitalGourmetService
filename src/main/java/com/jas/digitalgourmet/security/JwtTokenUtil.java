@@ -1,6 +1,7 @@
 package com.jas.digitalgourmet.security;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class JwtTokenUtil {
                 .withIssuer(ISSUER_INFO)
                 .withClaim("username", jwtCredentials.getUserName())
                 .withClaim("password", jwtCredentials.getPassword())
+                .withExpiresAt(new Date(System.currentTimeMillis() + (4 * 60 )))
                 .sign(Algorithm.HMAC512(SUPER_SECRET_KEY));
     }
 
