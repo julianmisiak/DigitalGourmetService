@@ -15,6 +15,7 @@ public class PasswordUtils {
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
+    private static final String salt = "EqdmPh53c9x43FygYpTvfoJvc4VXKP";
     
      public static String getSalt(int length) {
         StringBuilder returnValue = new StringBuilder(length);
@@ -36,7 +37,7 @@ public class PasswordUtils {
             spec.clearPassword();
         }
     }
-    public static String generateSecurePassword(String password, String salt) {
+    public static String generateSecurePassword(String password) {
         String returnValue = null;
         byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
  
@@ -45,9 +46,9 @@ public class PasswordUtils {
         return returnValue;
     }
     
-    public static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt){
+    public static boolean verifyUserPassword(String providedPassword, String securedPassword){
         boolean returnValue = false;
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
+        String newSecurePassword = generateSecurePassword(providedPassword);
         returnValue = newSecurePassword.equalsIgnoreCase(securedPassword);
         
         return returnValue;

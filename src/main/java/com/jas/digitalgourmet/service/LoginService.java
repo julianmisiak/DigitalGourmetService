@@ -38,11 +38,12 @@ public class LoginService {
 		User user = dao.findByUserName(jwtCredentials.getUserName());
 
 		if (user != null) {
-			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword(),
-					PasswordUtils.getSalt(30));
+			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword());
 			if (!isValidPassword) {
 				throw new BusinessException("Credenciales invalidas");
 			}
+		}else {
+			throw new BusinessException("Credenciales invalidas");
 		}
 
 		try {

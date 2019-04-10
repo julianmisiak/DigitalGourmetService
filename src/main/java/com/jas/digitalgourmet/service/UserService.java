@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	private String generatSecurePassword(User user) {
-		String securePassword = PasswordUtils.generateSecurePassword(user.getPassword(), PasswordUtils.getSalt(30));
+		String securePassword = PasswordUtils.generateSecurePassword(user.getPassword());
 		return securePassword;
 
 	}
