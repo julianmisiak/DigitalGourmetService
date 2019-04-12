@@ -1,12 +1,13 @@
 package com.jas.digitalgourmet.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USERS")
-public class User extends PersistentObject {
+@DiscriminatorValue("USER")
+public class User extends Person {
 	private String userName;
 	private String password;
 
