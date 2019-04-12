@@ -19,7 +19,7 @@ public class Address extends PersistentObject{
 	private String department;
 	private Person person;
 	
-	@Column(name = "PROVINCE", nullable = false)
+	@Column(name = "PROVINCE", nullable = true)
 	public String getProvince() {
 		return province;
 	}
@@ -27,7 +27,7 @@ public class Address extends PersistentObject{
 		this.province = province;
 	}
 	
-	@Column(name = "LOCATION", nullable = false)
+	@Column(name = "LOCATION", nullable = true)
 	public String getLocation() {
 		return location;
 	}
@@ -35,7 +35,7 @@ public class Address extends PersistentObject{
 		this.location = location;
 	}
 	
-	@Column(name = "POSTAL_CODE", nullable = false)
+	@Column(name = "POSTAL_CODE", nullable = true)
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -43,7 +43,7 @@ public class Address extends PersistentObject{
 		this.postalCode = postalCode;
 	}
 	
-	@Column(name = "STREET", nullable = false)
+	@Column(name = "STREET", nullable = true)
 	public String getStreet() {
 		return street;
 	}
@@ -51,7 +51,7 @@ public class Address extends PersistentObject{
 		this.street = street;
 	}
 	
-	@Column(name = "NUMBER", nullable = false)
+	@Column(name = "NUMBER", nullable = true)
 	public Integer getNumber() {
 		return number;
 	}
@@ -59,7 +59,7 @@ public class Address extends PersistentObject{
 		this.number = number;
 	}
 	
-	@Column(name = "IS_DEPARTMENT", nullable = false)
+	@Column(name = "IS_DEPARTMENT", nullable = true)
 	public Boolean getIsDepartment() {
 		return isDepartment;
 	}

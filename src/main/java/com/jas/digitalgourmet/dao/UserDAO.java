@@ -10,6 +10,6 @@ import com.jas.digitalgourmet.model.User;
 
 public interface UserDAO extends PersistentObjectExtendedDAO<User, Long>{
 	User findByUserName(String userName);
-	@Query("SELECT U FROM User U")
-	List<User> findAllUser();
+	@Query("SELECT u FROM User u WHERE ?1 = false or  u.isActive = ?1")
+	List<User> findAllUser(Boolean isActive);
 }

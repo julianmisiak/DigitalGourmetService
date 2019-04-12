@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jas.digitalgourmet.controller.dto.ErrorMessageDTO;
@@ -36,10 +37,10 @@ public class UserController {
 	@ApiOperation(value = "Get All User", notes = "List of all users")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful request"),
 			@ApiResponse(code = 400, message = "Invalid Request") })
-	public ResponseEntity<?> getAllUser(@RequestBody(required = false) JwtCredentials jwtCredentials) {
+	public ResponseEntity<?> getAllUser(@RequestParam(value = "isActive") Boolean isActive) {
 
 		try {
-			List<User> userList = service.findAllUser();
+			List<User> userList = service.findAllUser(isActive);
 			return ResponseEntity.ok().body(userList);
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

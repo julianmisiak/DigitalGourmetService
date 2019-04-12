@@ -18,8 +18,8 @@ public class UserService {
 		this.dao = dao;
 	}
 
-	public List<User> findAllUser() {
-		return dao.findAllUser();
+	public List<User> findAllUser(Boolean isActive) {
+		return dao.findAllUser(isActive);
 	}
 
 	public Integer inactiveObjectById(Long userOID) {

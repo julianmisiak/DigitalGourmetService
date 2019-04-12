@@ -24,7 +24,7 @@ public abstract class Person extends PersistentObject{
 	private String mail;
 	private List<Address> addresses = new ArrayList<Address>();
 	
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME", nullable = true)
 	public String getName() {
 		return name;
 	}
@@ -32,7 +32,7 @@ public abstract class Person extends PersistentObject{
 		this.name = name;
 	}
 	
-	@Column(name = "SURNAME", nullable = false)
+	@Column(name = "SURNAME", nullable = true)
 	public String getSurname() {
 		return surname;
 	}
@@ -40,7 +40,7 @@ public abstract class Person extends PersistentObject{
 		this.surname = surname;
 	}
 	
-	@Column(name = "ID_CARD", nullable = false)
+	@Column(name = "ID_CARD", nullable = true)
 	public Integer getIdCard() {
 		return idCard;
 	}
@@ -48,7 +48,7 @@ public abstract class Person extends PersistentObject{
 		this.idCard = idCard;
 	}
 	
-	@Column(name = "GENDER", nullable = false)
+	@Column(name = "GENDER", nullable = true)
 	@Enumerated(EnumType.ORDINAL) 
 	public Gender getGender() {
 		return gender;
@@ -57,7 +57,7 @@ public abstract class Person extends PersistentObject{
 		gender = this.gender;
 	}
 	
-	@Column(name = "MAIL", nullable = false)
+	@Column(name = "MAIL", nullable = true)
 	public String getMail() {
 		return mail;
 	}
