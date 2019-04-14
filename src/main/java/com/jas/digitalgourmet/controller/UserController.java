@@ -73,11 +73,11 @@ public class UserController {
 	@ApiOperation(value = "Logical Delete", notes = "Delete User By ID")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Delete Saccesfully"),
 			@ApiResponse(code = 400, message = "Invalid Request") })
-	public ResponseEntity<?> deleteUserById(@RequestBody(required = false) Long userOID) {
+	public ResponseEntity<?> deleteUserById(@RequestParam(value = "oid") Long OID) {
 
 		try {
-			service.inactiveObjectById(userOID);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(userOID);
+			service.inactiveObjectById(OID);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(Boolean.TRUE);
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));

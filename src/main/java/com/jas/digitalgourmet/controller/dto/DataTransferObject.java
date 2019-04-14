@@ -5,22 +5,15 @@ import java.util.Calendar;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({ "OID", "createTimestamp", "modificationTimestamp", "creationUser", "modificationUser" })
+@JsonPropertyOrder({ "oid", "createTimestamp", "modificationTimestamp", "creationUser", "modificationUser" })
 public abstract class DataTransferObject {
-	protected Long OID;
+	protected Long oid;
 	protected Calendar createTimestamp;
 	protected Calendar modificationTimestamp;
 	protected String creationUser;
 	protected String modificationUser;
+	protected Long pepe;
 
-	@JsonProperty("OID")
-	public Long getOID() {
-		return OID;
-	}
-
-	public void setOID(Long OID) {
-		OID = this.OID;
-	}
 
 	@JsonProperty("createTimestamp")
 	public Calendar getCreateTimestamp() {
@@ -58,4 +51,25 @@ public abstract class DataTransferObject {
 		this.modificationUser = modificationUser;
 	}
 
+	@JsonProperty("oid")
+	public Long getOid() {
+		return oid;
+	}
+
+	public void setOid(Long oid) {
+		this.oid = oid;
+	}
+
+	@JsonProperty("pepe")
+	public Long getPepe() {
+		return pepe;
+	}
+
+	public void setPepe(Long pepe) {
+		this.pepe = pepe;
+	}
+
+	
+	
+	
 }

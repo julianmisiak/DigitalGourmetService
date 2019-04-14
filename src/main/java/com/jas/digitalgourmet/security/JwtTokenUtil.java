@@ -24,7 +24,7 @@ public class JwtTokenUtil {
                 .withIssuer(ISSUER_INFO)
                 .withClaim("username", jwtCredentials.getUserName())
                 .withClaim("password", jwtCredentials.getPassword())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (4 * 60 * 1000))) // 5 minutos
+                .withExpiresAt(new Date(System.currentTimeMillis() + (4 * 60 * 1000000))) //4 * 60 * 1000 5 minutos
                 .sign(Algorithm.HMAC512(SUPER_SECRET_KEY));
     }
 

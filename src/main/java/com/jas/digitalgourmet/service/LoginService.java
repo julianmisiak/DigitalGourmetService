@@ -36,7 +36,7 @@ public class LoginService {
 	public TokenWrapper authenticate(JwtCredentials jwtCredentials) {
 		String token = null;
 		User user = dao.findByUserName(jwtCredentials.getUserName());
-
+//
 //		if (user != null) {
 //			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword());
 //			if (!isValidPassword) {

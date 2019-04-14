@@ -16,7 +16,7 @@ public class TranslateObject {
 	}
 
 	private void fillPersistentObject(PersistentObject po, DataTransferObject dto) {
-		po.setOID(dto.getOID());
+		po.setOID(dto.getOid());
 		po.setCreateTimestamp(dto.getCreateTimestamp());
 		po.setModificationTimestamp(dto.getModificationTimestamp());
 		po.setCreationUser(dto.getCreationUser());
@@ -24,7 +24,7 @@ public class TranslateObject {
 	}
 
 	private void fillDataTransferObject(PersistentObject po, DataTransferObject dto) {
-		dto.setOID(po.getOID());
+		dto.setOid(po.getOID());
 		dto.setCreateTimestamp(po.getCreateTimestamp());
 		dto.setModificationTimestamp(po.getModificationTimestamp());
 		dto.setCreationUser(po.getCreationUser());
