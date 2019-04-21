@@ -12,8 +12,15 @@ public abstract class DataTransferObject {
 	protected Calendar modificationTimestamp;
 	protected String creationUser;
 	protected String modificationUser;
-	protected Long pepe;
+	
+	@JsonProperty("oid")
+	public Long getOid() {
+		return oid;
+	}
 
+	public void setOid(Long oid) {
+		this.oid = oid;
+	}
 
 	@JsonProperty("createTimestamp")
 	public Calendar getCreateTimestamp() {
@@ -51,25 +58,5 @@ public abstract class DataTransferObject {
 		this.modificationUser = modificationUser;
 	}
 
-	@JsonProperty("oid")
-	public Long getOid() {
-		return oid;
-	}
-
-	public void setOid(Long oid) {
-		this.oid = oid;
-	}
-
-	@JsonProperty("pepe")
-	public Long getPepe() {
-		return pepe;
-	}
-
-	public void setPepe(Long pepe) {
-		this.pepe = pepe;
-	}
-
-	
-	
 	
 }

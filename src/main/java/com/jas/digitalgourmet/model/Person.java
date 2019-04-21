@@ -16,12 +16,12 @@ import javax.persistence.OneToMany;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="PERSON_TYPE", discriminatorType = DiscriminatorType.STRING)
-public abstract class Person extends PersistentObject{
+public abstract class Person extends PersistentObjectLogicalDelete{
 	private String name;
 	private String surname;
 	private Integer idCard;
 	private Gender gender;
-	private String mail;
+	private String email;
 	private List<Address> addresses = new ArrayList<Address>();
 	
 	@Column(name = "NAME", nullable = true)
@@ -54,15 +54,15 @@ public abstract class Person extends PersistentObject{
 		return gender;
 	}
 	public void setGender(Gender gender) {
-		gender = this.gender;
+		this.gender = gender;
 	}
 	
-	@Column(name = "MAIL", nullable = true)
-	public String getMail() {
-		return mail;
+	@Column(name = "EMAIL", nullable = true)
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@OneToMany(mappedBy = "person")

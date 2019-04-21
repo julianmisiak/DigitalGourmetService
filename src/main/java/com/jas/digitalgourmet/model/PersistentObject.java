@@ -16,7 +16,6 @@ import com.jas.digitalgourmet.model.auditable.Auditable;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class PersistentObject extends Auditable<String> {
 	protected Long OID;
-	protected Boolean isActive = Boolean.TRUE;
 
 	@Id
 	@Column(name = "OID", nullable = false)
@@ -28,15 +27,6 @@ public abstract class PersistentObject extends Auditable<String> {
 
 	public void setOID(Long OID) {
 		this.OID = OID;
-	}
-
-	@Column(name = "IS_ACTIVE", nullable = false)
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
 	}
 
 }

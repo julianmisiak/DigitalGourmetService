@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "userName", "password" })
-public class UserDTO extends DataTransferObject {
+public class UserDTO extends PersonDTO {
 	private String userName;
 	private String password;
 
