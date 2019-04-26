@@ -1,14 +1,10 @@
-package com.jas.digitalgourmet.model;
+package com.jas.digitalgourmet.controller.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@Entity
-@Table(name="PERSON_ADDRESS")
-public class Address extends PersistentObject{
+@JsonPropertyOrder({ "province", "location", "postal_code", "street", "number", "isDepartment", "floor", "department"})
+public class AddressDTO extends DataTransferObjectLogicalDelete {
 	private String province;
 	private String location;
 	private String postalCode;
@@ -17,10 +13,8 @@ public class Address extends PersistentObject{
 	private Boolean isDepartment = Boolean.FALSE;
 	private Integer floor;
 	private String department;
-	private String isDefault;
-	private Person person;
 	
-	@Column(name = "PROVINCE", nullable = true)
+	@JsonProperty("province")
 	public String getProvince() {
 		return province;
 	}
@@ -28,7 +22,7 @@ public class Address extends PersistentObject{
 		this.province = province;
 	}
 	
-	@Column(name = "LOCATION", nullable = true)
+	@JsonProperty("location")
 	public String getLocation() {
 		return location;
 	}
@@ -36,7 +30,7 @@ public class Address extends PersistentObject{
 		this.location = location;
 	}
 	
-	@Column(name = "POSTAL_CODE", nullable = true)
+	@JsonProperty("postal_code")
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -44,7 +38,7 @@ public class Address extends PersistentObject{
 		this.postalCode = postalCode;
 	}
 	
-	@Column(name = "STREET", nullable = true)
+	@JsonProperty("street")
 	public String getStreet() {
 		return street;
 	}
@@ -52,7 +46,7 @@ public class Address extends PersistentObject{
 		this.street = street;
 	}
 	
-	@Column(name = "NUMBER", nullable = true)
+	@JsonProperty("number")
 	public Integer getNumber() {
 		return number;
 	}
@@ -60,7 +54,7 @@ public class Address extends PersistentObject{
 		this.number = number;
 	}
 	
-	@Column(name = "IS_DEPARTMENT", nullable = true)
+	@JsonProperty("is_department")
 	public Boolean getIsDepartment() {
 		return isDepartment;
 	}
@@ -68,7 +62,7 @@ public class Address extends PersistentObject{
 		this.isDepartment = isDepartment;
 	}
 	
-	@Column(name = "FLOOR", unique = true)
+	@JsonProperty("floor")
 	public Integer getFloor() {
 		return floor;
 	}
@@ -76,29 +70,12 @@ public class Address extends PersistentObject{
 		this.floor = floor;
 	}
 	
-	@Column(name = "DEPARTMENT", unique = true)
+	@JsonProperty("department")
 	public String getDepartment() {
 		return department;
 	}
 	public void setDepartment(String department) {
 		this.department = department;
-	}
-	
-	@Column(name = "IS_DEFAULT", unique = true)
-	public String getIsDefault() {
-		return isDefault;
-	}
-	public void setIsDefault(String isDefault) {
-		this.isDefault = isDefault;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name="PERSON_ID")
-	public Person getPerson() {
-		return person;
-	}
-	public void setPerson(Person person) {
-		this.person = person;
 	}
 
 }
