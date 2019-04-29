@@ -40,7 +40,7 @@ public class UserController {
 	public ResponseEntity<?> getAllUser(@RequestParam(value = "isActive") Boolean isActive) {
 
 		try {
-			List<User> userList = service.findAllUser(isActive);
+			List<UserDTO> userList = service.findAllUser(isActive);
 			return ResponseEntity.ok().body(userList);
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

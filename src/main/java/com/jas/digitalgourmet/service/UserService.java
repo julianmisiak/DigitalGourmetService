@@ -1,5 +1,6 @@
 package com.jas.digitalgourmet.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,8 +19,17 @@ public class UserService {
 		this.dao = dao;
 	}
 
-	public List<User> findAllUser(Boolean isActive) {
-		return dao.findAllUser(isActive);
+	public List<UserDTO> findAllUser(Boolean isActive) {
+		
+		List<User> userList =  dao.findAllUser(isActive);
+		List<UserDTO> userDTOList = new ArrayList<UserDTO>();
+		
+		userList.forEach(user -> {
+			UserDTO userDTO = TranslateObject.getInstance().translateToDTO(user);
+			userDTOList.add(userDTO);
+		});
+		
+		return userDTOList;
 	}
 
 	public Integer inactiveObjectById(Long userOID) {

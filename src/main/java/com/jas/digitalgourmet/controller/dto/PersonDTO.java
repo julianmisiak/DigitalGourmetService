@@ -13,7 +13,7 @@ public class PersonDTO extends DataTransferObjectLogicalDelete{
 	private Integer idCard;
 	private Gender gender;
 	private String email;
-	private List<AddressDTO> addeesses;
+	private List<AddressDTO> addresses;
 	
 	@JsonProperty("name")
 	public String getName() {
@@ -55,12 +55,12 @@ public class PersonDTO extends DataTransferObjectLogicalDelete{
 		this.email = email;
 	}
 	
-	@JsonProperty("addesses")
-	public List<AddressDTO> getAddeesses() {
-		return addeesses;
+	@JsonProperty("addresses")
+	public List<AddressDTO> getAddresses() {
+		return addresses;
 	}
-	public void setAddeesses(List<AddressDTO> addeesses) {
-		this.addeesses = addeesses;
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
 	}
 	
 	

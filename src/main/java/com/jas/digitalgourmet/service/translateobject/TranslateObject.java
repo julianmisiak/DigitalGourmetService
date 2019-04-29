@@ -1,9 +1,14 @@
 package com.jas.digitalgourmet.service.translateobject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.jas.digitalgourmet.controller.dto.AddressDTO;
 import com.jas.digitalgourmet.controller.dto.DataTransferObject;
 import com.jas.digitalgourmet.controller.dto.DataTransferObjectLogicalDelete;
 import com.jas.digitalgourmet.controller.dto.PersonDTO;
 import com.jas.digitalgourmet.controller.dto.UserDTO;
+import com.jas.digitalgourmet.model.Address;
 import com.jas.digitalgourmet.model.Gender;
 import com.jas.digitalgourmet.model.PersistentObject;
 import com.jas.digitalgourmet.model.PersistentObjectLogicalDelete;
@@ -55,7 +60,35 @@ public class TranslateObject {
 		fillDataTransferObject((PersistentObject) po, (DataTransferObject) dto);
 		dto.setIsActive(po.getIsActive());
 	}
+	
+	/*
+	 * * * * Address * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 */
+	private void fillPersistentObject(Address po, AddressDTO dto) {
+		fillPersistentObject((PersistentObjectLogicalDelete) po, (DataTransferObjectLogicalDelete) dto);
+		po.setProvince(dto.getProvince());
+		po.setDistrict(dto.getDistrict());
+		po.setLocation(dto.getLocation());
+		po.setPostalCode(dto.getPostalCode());
+		po.setStreet(dto.getStreet());
+		po.setNumber(dto.getNumber());
+		po.setIsDepartment(dto.getIsDepartment());
+		po.setDepartment(dto.getDepartment());
+		po.setIsDefault(dto.getIsDefault());
+	}
 
+	private void fillDataTransferObject(Address po, AddressDTO dto) {
+		fillDataTransferObject((PersistentObjectLogicalDelete) po, (DataTransferObjectLogicalDelete) dto);
+		dto.setProvince(po.getProvince());
+		dto.setDistrict(po.getDistrict());
+		dto.setLocation(po.getLocation());
+		dto.setPostalCode(po.getPostalCode());
+		dto.setStreet(po.getStreet());
+		dto.setNumber(po.getNumber());
+		dto.setIsDepartment(po.getIsDepartment());
+		dto.setDepartment(po.getDepartment());
+		dto.setIsDefault(po.getIsDefault());
+	}
 	
 	/*
 	 * * * * Person * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -68,6 +101,15 @@ public class TranslateObject {
 		po.setGender(dto.getGender());
 		po.setEmail(dto.getEmail());
 		
+		List<Address> addresses = new ArrayList<>();
+		dto.getAddresses().forEach(addressDTO -> {
+			Address address = new Address();
+			fillPersistentObject(address, addressDTO);
+			address.setPerson(po);
+			addresses.add(address);
+		});
+		po.setAddresses(addresses);
+		
 	}
 
 	private void fillDataTransferObject(Person po, PersonDTO dto) {
@@ -78,6 +120,13 @@ public class TranslateObject {
 		dto.setGender(po.getGender());
 		dto.setEmail(po.getEmail());
 		
+		List<AddressDTO> addressesDTO = new ArrayList<>();
+		po.getAddresses().forEach(address -> {
+			AddressDTO addressDTO = new AddressDTO();
+			fillDataTransferObject(address, addressDTO);
+			addressesDTO.add(addressDTO);
+		});
+		dto.setAddresses(addressesDTO);
 	}
 	
 	
