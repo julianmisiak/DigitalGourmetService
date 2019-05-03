@@ -141,7 +141,7 @@ public class TranslateObject {
 
 	private void fillDataTransferObject(User po, UserDTO dto) {
 		fillDataTransferObject((Person) po, (PersonDTO) dto);
-		dto.setUserName(po.getCreationUser());
+		dto.setUserName(po.getUserName());
 		dto.setPassword(po.getPassword());
 	}
 

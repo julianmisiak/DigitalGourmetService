@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,6 +79,24 @@ public class UserController {
 		try {
 			service.inactiveObjectById(OID);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(Boolean.TRUE);
+		} catch (BusinessException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ErrorMessageDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+		}
+	}
+	
+	@RequestMapping(value = "/id", method = RequestMethod.GET)
+	@ApiOperation(value = "Get User By id", notes = "")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Ge t User Saccesfully"),
+			@ApiResponse(code = 400, message = "Invalid Request") })
+	public ResponseEntity<?> getUserById(@RequestParam(value = "oid") Long OID) {
+
+		try {
+			UserDTO user = service.getUserById(OID);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
 		} catch (BusinessException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(new ErrorMessageDTO(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));

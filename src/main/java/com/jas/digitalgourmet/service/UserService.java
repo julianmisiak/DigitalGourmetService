@@ -2,6 +2,7 @@ package com.jas.digitalgourmet.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,12 @@ public class UserService {
 		String securePassword = PasswordUtils.generateSecurePassword(user.getPassword());
 		return securePassword;
 
+	}
+
+	public UserDTO getUserById(Long OID) {
+		User user = dao.findById(OID).get();
+		return TranslateObject.getInstance().translateToDTO(user);
+		
 	}
 
 }
