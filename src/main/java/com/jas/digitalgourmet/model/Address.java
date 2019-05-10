@@ -113,7 +113,7 @@ public class Address extends PersistentObjectLogicalDelete {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PERSON_ID")
+	@JoinColumn(name = "PERSON_OID")
 	public Person getPerson() {
 		return person;
 	}

@@ -74,7 +74,5 @@ public abstract class Person extends PersistentObjectLogicalDelete{
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
-	
-	
 
 }

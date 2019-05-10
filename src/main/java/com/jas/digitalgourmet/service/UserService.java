@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.jas.digitalgourmet.controller.dto.UserDTO;
 import com.jas.digitalgourmet.dao.UserDAO;
 import com.jas.digitalgourmet.model.User;
 import com.jas.digitalgourmet.service.translateobject.TranslateObject;
+import com.jas.digitalgourmet.util.BusinessException;
 import com.jas.digitalgourmet.util.PasswordUtils;
 
 @Service
@@ -38,10 +41,17 @@ public class UserService {
 	}
 
 	public User saveOrUpdateUser(UserDTO userDTO) {
+		try {
 		User user = TranslateObject.getInstance().translateToPersistentObject(userDTO);
-		String securePassword = generatSecurePassword(user);
-		user.setPassword(securePassword);
+		if(user.getOID() == null) {
+			String securePassword = generatSecurePassword(user);
+			user.setPassword(securePassword);
+		}
 		return dao.save(user);
+		}catch(DataIntegrityViolationException e) {
+			e.printStackTrace();
+			throw new BusinessException("Nombre de usuario existente");
+		}
 	}
 
 	private String generatSecurePassword(User user) {
