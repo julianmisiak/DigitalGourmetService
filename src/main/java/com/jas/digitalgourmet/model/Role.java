@@ -19,7 +19,7 @@ public class Role extends PersistentObjectLogicalDelete {
 	private List<AccessResource> accessResources = new ArrayList<AccessResource>();
 	private List<User> users = new ArrayList<User>();
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME", unique = true, nullable = false)
 	public String getName() {
 		return name;
 	}

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({ "oid", "createTimestamp", "modificationTimestamp", "creationUser", "modificationUser" })
 public abstract class DataTransferObject {
 	protected Long oid;
+	protected int version;
 	protected Calendar createTimestamp;
 	protected Calendar modificationTimestamp;
 	protected String creationUser;
@@ -20,6 +21,15 @@ public abstract class DataTransferObject {
 
 	public void setOid(Long oid) {
 		this.oid = oid;
+	}
+
+	@JsonProperty("version")
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	@JsonProperty("createTimestamp")

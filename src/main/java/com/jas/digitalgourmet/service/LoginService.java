@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.jas.digitalgourmet.controller.dto.JwtCredentials;
 import com.jas.digitalgourmet.controller.dto.TokenWrapper;
-import com.jas.digitalgourmet.dao.UserDAO;
 import com.jas.digitalgourmet.model.User;
+import com.jas.digitalgourmet.repository.UserRepository;
 import com.jas.digitalgourmet.security.JwtTokenUtil;
 import com.jas.digitalgourmet.util.BusinessException;
 import com.jas.digitalgourmet.util.PasswordUtils;
@@ -20,10 +20,10 @@ import com.jas.digitalgourmet.util.PasswordUtils;
 @Service
 public class LoginService {
 	private final JwtTokenUtil jwtTokenUtil;
-	private final UserDAO dao;
+	private final UserRepository dao;
 
 	@Autowired
-	public LoginService(JwtTokenUtil jwtTokenUtil, UserDAO dao) {
+	public LoginService(JwtTokenUtil jwtTokenUtil, UserRepository dao) {
 		this.jwtTokenUtil = jwtTokenUtil;
 		this.dao = dao;
 	}
@@ -37,17 +37,17 @@ public class LoginService {
 		String token = null;
 		User user = dao.findByUserName(jwtCredentials.getUserName());
 
-		if (user != null) {
-			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword());
-			if (!isValidPassword) {
-				throw new BusinessException("Credenciales invalidas");
-			}
-			if(!user.getIsActive()) {
-				throw new BusinessException("Usuario inactivo");
-			}
-		}else {
-			throw new BusinessException("Credenciales invalidas");
-		}
+//		if (user != null) {
+//			Boolean isValidPassword = PasswordUtils.verifyUserPassword(jwtCredentials.getPassword(), user.getPassword());
+//			if (!isValidPassword) {
+//				throw new BusinessException("Credenciales invalidas");
+//			}
+//			if(!user.getIsActive()) {
+//				throw new BusinessException("Usuario inactivo");
+//			}
+//		}else {
+//			throw new BusinessException("Credenciales invalidas");
+//		}
 
 		try {
 			token = jwtTokenUtil.generateJWT(jwtCredentials);

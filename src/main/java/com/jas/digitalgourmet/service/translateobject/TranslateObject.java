@@ -39,6 +39,7 @@ public class TranslateObject {
 		po.setModificationTimestamp(dto.getModificationTimestamp());
 		po.setCreationUser(dto.getCreationUser());
 		po.setModificationUser(dto.getModificationUser());
+		po.setVersion(dto.getVersion());
 	}
 
 	private void fillDataTransferObject(PersistentObject po, DataTransferObject dto) {
@@ -47,6 +48,7 @@ public class TranslateObject {
 		dto.setModificationTimestamp(po.getModificationTimestamp());
 		dto.setCreationUser(po.getCreationUser());
 		dto.setModificationUser(po.getModificationUser());
+		dto.setVersion(po.getVersion());
 	}
 
 	/*

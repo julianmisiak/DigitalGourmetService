@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jas.digitalgourmet.controller.dto.ErrorMessageDTO;
-import com.jas.digitalgourmet.controller.dto.JwtCredentials;
 import com.jas.digitalgourmet.controller.dto.UserDTO;
-import com.jas.digitalgourmet.model.User;
-import com.jas.digitalgourmet.service.LoginService;
 import com.jas.digitalgourmet.service.UserService;
 import com.jas.digitalgourmet.util.BusinessException;
 
@@ -56,7 +53,7 @@ public class UserController {
 	@ApiOperation(value = "Create User", notes = "Create user and encrypted password")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful request"),
 			@ApiResponse(code = 400, message = "Invalid Request") })
-	public ResponseEntity<?> saveOrUpdateUser(@RequestBody(required = false) UserDTO user) {
+	public ResponseEntity<?> saveOrUpdateUser(@RequestBody UserDTO user) {
 
 		try {
 			service.saveOrUpdateUser(user);

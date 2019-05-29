@@ -3,22 +3,24 @@ package com.jas.digitalgourmet.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.jas.digitalgourmet.controller.dto.RoleDTO;
 import com.jas.digitalgourmet.controller.dto.UserDTO;
-import com.jas.digitalgourmet.dao.RoleDAO;
 import com.jas.digitalgourmet.model.Role;
 import com.jas.digitalgourmet.model.User;
+import com.jas.digitalgourmet.repository.RoleRepository;
 import com.jas.digitalgourmet.service.translateobject.TranslateObject;
 import com.jas.digitalgourmet.util.BusinessException;
 
 @Service
 public class RoleService {
-	private final RoleDAO dao;
+	private final RoleRepository dao;
 
-	public RoleService(RoleDAO dao) {
+	public RoleService(RoleRepository dao) {
 		super();
 		this.dao = dao;
 	}
@@ -40,14 +42,9 @@ public class RoleService {
 		return dao.inactiveObjectById(oid);
 	}
 
-	public Role saveOrUpdateRole(RoleDTO roleDTO) {
-		try {
-			Role role = TranslateObject.getInstance().translateToPersistentObject(roleDTO);
-			return dao.save(role);
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			throw new BusinessException("Hubo un error desconocido");
-		}
+	public Role saveOrUpdateRole(RoleDTO roleDTO) throws PSQLException {
+		Role role = TranslateObject.getInstance().translateToPersistentObject(roleDTO);
+		return dao.save(role);
 	}
 
 	public RoleDTO getRoleById(Long OID) {

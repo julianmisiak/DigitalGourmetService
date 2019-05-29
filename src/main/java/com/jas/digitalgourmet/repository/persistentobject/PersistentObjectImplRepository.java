@@ -1,9 +1,10 @@
-package com.jas.digitalgourmet.dao.persistentobject;
+package com.jas.digitalgourmet.repository.persistentobject;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,12 +15,14 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-public class PersistentObjectImplDAO<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
-		implements PersistentObjectExtendedDAO<T, ID> {
+import com.jas.digitalgourmet.util.BusinessException;
+
+public class PersistentObjectImplRepository<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
+		implements PersistentObjectExtendedRepository<T, ID> {
 
 	private EntityManager entityManager;
 
-	public PersistentObjectImplDAO(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+	public PersistentObjectImplRepository(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);
 		this.entityManager = entityManager;
 	}
@@ -56,4 +59,16 @@ public class PersistentObjectImplDAO<T, ID extends Serializable> extends SimpleJ
 		return activeOrInactiveObjectById(OID, Boolean.FALSE);
 	}
 
+	@Override
+	public <S extends T> S save(S entity) {
+		try {
+			return super.save(entity);
+		} catch (OptimisticLockException e) {
+			e.printStackTrace();
+			throw new BusinessException("Otro usuario modifico la entidad. Recargue la página");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("Error desconocido, Consulte al administrador");
+		}
+	}
 }
