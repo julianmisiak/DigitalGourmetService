@@ -3,8 +3,6 @@ package com.jas.digitalgourmet.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +40,14 @@ public class RoleService {
 		return dao.inactiveObjectById(oid);
 	}
 
-	public Role saveOrUpdateRole(RoleDTO roleDTO) throws PSQLException {
-		Role role = TranslateObject.getInstance().translateToPersistentObject(roleDTO);
-		return dao.save(role);
+	public Role saveOrUpdateRole(RoleDTO roleDTO) {
+		try {
+			Role role = TranslateObject.getInstance().translateToPersistentObject(roleDTO);
+			return dao.save(role);
+		} catch (ConstraintViolationException e) {
+			e.printStackTrace();
+			throw new BusinessException("Nombre de role existente");
+		}
 	}
 
 	public RoleDTO getRoleById(Long OID) {
